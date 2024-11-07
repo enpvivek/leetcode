@@ -1,23 +1,13 @@
-// int fib(int n){
-//    if(n<=1){
-//        return n;
-//    } 
-//     return fib(n-1)+fib(n-2);
-// }
 class Solution {
+    
 public:
+    int dp[46]={0};
     int climbStairs(int n) {
-        
-        int t1 = 0;
-        int t2 = 1;
-        int next = 0;
-        for(int i = 1; i <=n; i++){
-           next = t1+t2;
-            t1 = t2;
-            t2 = next;
+        dp[0]=1;
+        dp[1]=1;
+        for(int i = 2; i <=n; i++){
+            dp[i]=dp[i-1]+dp[i-2];
         }
-        
-        return next;
-        //return fib(n+1);
+        return dp[n];
     }
 };
