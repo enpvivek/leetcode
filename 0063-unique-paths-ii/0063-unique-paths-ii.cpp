@@ -1,16 +1,19 @@
 class Solution {
-    int paths[101][101] = {0};
+    int paths[102][102] = {0};
 
     int totalPaths(vector<vector<int>>& obstacleGrid, int m, int n) {
-        if (m < 1 || n < 1 || (obstacleGrid[m - 1][n - 1] == 1)) {
-            return 0;
-        } else if (m == 1 && n == 1) {
-            return 1;
-        } else if (paths[m][n] != 0) {
-            return paths[m][n];
+        if (obstacleGrid[0][0] == 1) return 0;
+         paths[1][1] = 1;
+         for (int i = 1; i <= m; ++i) {
+            for (int j = 1; j <= n; ++j) {
+                if (obstacleGrid[i-1][j-1] == 1) {
+                    paths[i][j] = 0;  // Obstacle blocks the path
+                } else {
+                    if (i > 1) paths[i][j] += paths[i-1][j];  // From above
+                    if (j > 1) paths[i][j] += paths[i][j-1];  // From left
+                }
+            }
         }
-        paths[m][n] = totalPaths(obstacleGrid, m - 1, n) +
-                      totalPaths(obstacleGrid, m, n - 1);
         return paths[m][n];
     }
 
